@@ -1,9 +1,11 @@
-import { UserRepository } from '@src/db/user.repository';
+import { Module } from '@nestjs/common';
+import { CryptographyModule } from '@src/cryptography/cryptography.module';
+import { DbProviders } from '@src/db/db.provider';
+import { PrismaModule } from '@src/prisma/prisma.module';
 
-const DbProvider = {
-  UserRepository,
-};
-
-const DbProviders = Object.values(DbProvider);
-
-export { DbProvider, DbProviders };
+@Module({
+  imports: [PrismaModule, CryptographyModule],
+  providers: DbProviders,
+  exports: DbProviders,
+})
+export class DbModule {}
