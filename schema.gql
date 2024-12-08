@@ -2,13 +2,24 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+input AuthCreateInput {
+  email: String!
+  password: String!
+}
+
 input CreateUserInput {
   email: String!
   password: String!
 }
 
+type JwtModel {
+  accessToken: String!
+  refreshToken: String!
+}
+
 type Mutation {
-  createUser(data: CreateUserInput!): User!
+  authCreate(input: AuthCreateInput!): JwtModel!
+  createUser(input: CreateUserInput!): User!
 }
 
 type Query {
