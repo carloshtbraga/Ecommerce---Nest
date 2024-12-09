@@ -1,3 +1,4 @@
+
 CREATE EXTENSION "uuid-ossp";
 -- CreateEnum
 CREATE TYPE "UserStatus" AS ENUM ('created', 'pending-email-confirmation', 'pending-phone-confirmation', 'activated', 'deactivated', 'blocked');

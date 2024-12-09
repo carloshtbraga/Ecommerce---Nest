@@ -30,4 +30,8 @@ export class UserRepository {
   public async create(args: Prisma.UserCreateArgs): Promise<User> {
     return await this.prisma.user.create(args);
   }
+
+  public async update(args: Prisma.UserUpdateArgs): Promise<User> {
+    return await this.prisma.user.update(args);
+  }
 }

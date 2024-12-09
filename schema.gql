@@ -2,6 +2,13 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
+"""Approval status of the user"""
+enum ApprovalStatus {
+  Approved
+  Pending
+  Rejected
+}
+
 input AuthCreateInput {
   email: String!
   password: String!
@@ -12,6 +19,11 @@ input CreateUserInput {
   password: String!
 }
 
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
 type JwtModel {
   accessToken: String!
   refreshToken: String!
@@ -19,15 +31,71 @@ type JwtModel {
 
 type Mutation {
   authCreate(input: AuthCreateInput!): JwtModel!
-  createUser(input: CreateUserInput!): User!
+  confirmEmail(input: UserConfirmEmailInput!): Boolean!
+  createUser(input: CreateUserInput!): UserModel!
+  sendEmailVerification(input: UserSendEmailVerificationInput!): Boolean!
+  updateUser(input: UpdateUserInput!): UserModel!
 }
 
 type Query {
   hello: String!
 }
 
-type User {
+input UpdateUserInput {
+  """Approval status of the user"""
+  approvalStatus: ApprovalStatus
+
+  """Email of the user"""
   email: String
-  id: ID!
+
+  """Name of the user"""
+  name: String
+
+  """Phone number of the user"""
+  phone: String
+
+  """Reason for rejection, if applicable"""
+  rejectedReason: String
+
+  """Current status of the user"""
+  status: UserStatus
+
+  """Type of the user (individual or legal entity)"""
+  type: UserType
+}
+
+input UserConfirmEmailInput {
+  token: String!
+}
+
+type UserModel {
+  approvalStatus: String
+  createdAt: DateTime
+  email: String!
+  name: String
+  phone: String
+  slug: String
   status: String
+  type: String
+  updatedAt: DateTime
+}
+
+input UserSendEmailVerificationInput {
+  slug: String!
+}
+
+"""Current status of the user"""
+enum UserStatus {
+  Activated
+  Blocked
+  Created
+  Deactivated
+  PendingEmailConfirmation
+  PendingPhoneConfirmation
+}
+
+"""Type of the user"""
+enum UserType {
+  Individual
+  LegalEntity
 }
